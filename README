@@ -1,0 +1,19 @@
+# NDI 2024
+
+## Commandes utiles
+
+### Installer les dépendances
+```
+npm install
+```
+
+### Lancer le serveur de dev
+```
+npm run dev
+```
+
+### Démarrer la base de données Postgres
+
+```
+sudo docker run -p 5432:5432 -e POSTGRES_PASSWORD=egg -d postgres
+```

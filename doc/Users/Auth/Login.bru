@@ -16,3 +16,13 @@ body:json {
       "password": "123456789101112"
   }
 }
+
+script:post-response {
+  if(res.status === 200) {  
+    const body = res.body 
+    
+    if(body.token && body.token.token) {
+      bru.setVar('token', body.token.token)
+    }
+  }
+}

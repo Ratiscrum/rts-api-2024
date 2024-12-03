@@ -1,4 +1,4 @@
-ARG NODE_IMAGE=node:20.12.1-bullseye-slim
+ARG NODE_IMAGE=node:23-alpine
 
 ###### First Stage - Creating base ######
 FROM $NODE_IMAGE AS base

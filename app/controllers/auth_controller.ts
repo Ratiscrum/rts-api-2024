@@ -1,6 +1,8 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import User from "#models/user";
 import { loginValidator, registerValidator } from "#validators/auth";
+import { verifyOtpValidator } from '#validators/verify_otp';
+import twoFactorAuth from '@nulix/adonis-2fa/services/main';
 
 
 export default class AuthController {
@@ -17,6 +19,25 @@ export default class AuthController {
         const payload = await request.validateUsing(loginValidator)
 
         const user = await User.verifyCredentials(payload.email, payload.password)
+
+        if(!user) {
+            return response.badRequest({ message: 'Invalid credentials' })
+        }
+
+        if(user.isTwoFactorEnabled) {
+          const payloadWithOTP = await request.validateUsing(loginValidator && verifyOtpValidator)
+
+          const isValid = twoFactorAuth.verifyToken(
+            user.twoFactorSecret,
+            payloadWithOTP.otp,
+            user.twoFactorRecoveryCodes
+          )
+
+          if (!isValid) {
+            return response.badRequest({ message: 'OTP invalid' })
+          }
+        }
+
         const token = await User.accessTokens.create(user)
 
         return response.ok({ user, token })

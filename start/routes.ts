@@ -11,6 +11,7 @@ import router from '@adonisjs/core/services/router'
 import { middleware } from './kernel.js'
 
 const AuthController = () => import('#controllers/auth_controller')
+const TwoFactorAuthController = () => import('#controllers/two_factor_auth_controller')
 
 router.get('/', async () => {
   return {
@@ -33,3 +34,10 @@ router.get('me', async ({ auth, response }) => {
     return response.unauthorized({ error: 'User not found' })
   }
 }).use(middleware.auth())
+
+router.group(() => {
+  router.post('generate', [TwoFactorAuthController, 'generate'])
+  router.post('disable', [TwoFactorAuthController, 'disable'])
+  router.post('verify', [TwoFactorAuthController, 'verify'])
+  router.post('recovery-codes', [TwoFactorAuthController, 'generateRecoveryCodes'])
+}).prefix('2fa').use(middleware.auth())

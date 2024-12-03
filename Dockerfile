@@ -22,7 +22,6 @@ FROM base AS production
 ENV NODE_ENV=production
 ENV PORT=$PORT
 ENV HOST=0.0.0.0
-RUN apt-get update && apt-get install -y wget curl && rm -rf /var/lib/apt/lists/*
 COPY --chown=node:node ./package*.json ./
 COPY --chown=node:node --from=build /home/node/app/build .
 RUN npm ci --omit="dev"

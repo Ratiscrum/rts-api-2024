@@ -1,0 +1,17 @@
+meta {
+  name: Verify
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{URL}}/2fa/verify
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "otp": "209361"
+  }
+}

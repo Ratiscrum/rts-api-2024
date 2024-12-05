@@ -3,7 +3,7 @@ name: Lint and test application
 on:
   pull_request: 
     branches:
-      - main
+      - master
 
 jobs:
   build:

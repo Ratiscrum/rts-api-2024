@@ -3,7 +3,7 @@ name: Lint and test application
 on:
   pull_request: 
     branches:
-      - master
+      - main
 
 jobs:
   build:
@@ -21,5 +21,5 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Build test 
+      - name: Build test
         run: pnpm build

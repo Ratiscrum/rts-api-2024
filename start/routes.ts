@@ -12,6 +12,7 @@ import { middleware } from './kernel.js'
 
 const AuthController = () => import('#controllers/auth_controller')
 const TwoFactorAuthController = () => import('#controllers/two_factor_auth_controller')
+const BottlesController = () => import('#controllers/bottles_controller')
 
 router.get('/', async () => {
   return {
@@ -41,3 +42,8 @@ router.group(() => {
   router.post('verify', [TwoFactorAuthController, 'verify'])
   router.post('recovery-codes', [TwoFactorAuthController, 'generateRecoveryCodes'])
 }).prefix('2fa').use(middleware.auth())
+
+router.group(() => {
+  router.get('', [BottlesController, 'index'])
+  router.post('', [BottlesController, 'store'])
+}).prefix('bottles');

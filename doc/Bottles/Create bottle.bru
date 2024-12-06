@@ -1,0 +1,19 @@
+meta {
+  name: Create bottle
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{URL}}/bottles
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "message": "meuch un peu la team",
+    "x": 30,
+    "y": 40
+  }
+}
